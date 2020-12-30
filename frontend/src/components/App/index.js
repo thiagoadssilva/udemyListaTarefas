@@ -1,14 +1,14 @@
 import React from 'react';
-import{
-    Container
-}from './styled';
+import { useRouter } from 'hookrouter';
+
+const routes = {
+    '/': () => <ListaTarefas />,
+    '/cadastrar': () => <CadastrarTarefa />,
+    '/atualizar/:id': () => <AtualizarTarefa id={id} />
+};
 
 function App() {
-    return (
-        <Container>
-            thiago jose da silva
-        </Container>
-    );
+    return useRouter(routes);
 }
 
 export default App;
