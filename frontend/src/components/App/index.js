@@ -1,14 +1,18 @@
 import React from 'react';
-import { useRouter } from 'hookrouter';
+import { useRoutes } from 'hookrouter';
+
+import ListaTarefas from '../ListaTarefas';
+import CadastrarTarefa from '../CadastrarTarefa';
+import AtualizarTarefa from '../AtualizarTarefa';
 
 const routes = {
     '/': () => <ListaTarefas />,
     '/cadastrar': () => <CadastrarTarefa />,
-    '/atualizar/:id': () => <AtualizarTarefa id={id} />
+    '/atualizar/:id': ({id}) => <AtualizarTarefa id={id} />
 };
 
 function App() {
-    return useRouter(routes);
+    return useRoutes(routes);
 }
 
 export default App;
