@@ -1,4 +1,6 @@
 import React from 'react';
+import { A } from 'hookrouter';
+
 
 import {
     Container
@@ -7,7 +9,9 @@ import {
 export default () => {
     return(
         <Container>
-            <h1>thiago jose da silva</h1>
+             <A href="/cadastrar" className="btn btn-success bnt-sm" >
+                Nova Tarefa
+            </A>
         </Container>
     );
 }

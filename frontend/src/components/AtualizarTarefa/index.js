@@ -5,7 +5,7 @@ import {
 } from './styled';
 
 export default () => {
-    return(
+    return (
         <Container>
             <h1>Atualiza Tarefa</h1>
         </Container>
