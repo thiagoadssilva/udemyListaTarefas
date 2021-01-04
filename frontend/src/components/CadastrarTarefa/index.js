@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Form, Jumbotron, Modal } from 'react-bootstrap';
 import { navigate, A } from 'hookrouter';
+import Tarefa from '../../models/tarefa.model';
 
 import {
     Container
@@ -12,7 +13,16 @@ export default () => {
     const [exibirModal, setExibirModal] = useState(false);
 
     function cadastrar(event) {
+        event.preventDefault();
+        setFormValidado(true);
+        if(event.currentTarget.checkValidity() === true){
+            const tarefasDb = localStorage['tarefas'];
+            const tarefas = tarefasDb ? JSON.parse(tarefasDb) : [];
 
+            tarefas.push(new Tarefa(new Date().getTime(), tarefa, false));
+            localStorage['tarefas'] = JSON.stringify(tarefas);
+            setExibirModal(true);
+        }
     }
 
     function handleTxtTarefa(event) {
@@ -38,6 +48,7 @@ export default () => {
                             required
                             value={tarefa}
                             onChange={handleTxtTarefa}
+                            data-testid="txt-tarefa"
                         >
                             {/* <Form.Control.Feedback type="invalid">
                                 A tarefa deve conter ao menos 5 caracteres.
@@ -50,6 +61,7 @@ export default () => {
                             variant="success"
                             type="submit"
                             className=" btn btn-success btn-sm"
+                            data-testid="btn-cadastrar"
                         >
                             Cadastrar
                         </Button>
@@ -57,7 +69,7 @@ export default () => {
                         <A href="/" className="btn btn-light">Voltar</A>
                     </Form.Group>
                 </Form>
-                <Modal show={exibirModal} onHide={handleFecharModal}>
+                <Modal show={exibirModal} onHide={handleFecharModal} data-testid="modal">
                     <Modal.Header closeButton>
                         <Modal.Title>Sucesso!!</Modal.Title>
                     </Modal.Header>
