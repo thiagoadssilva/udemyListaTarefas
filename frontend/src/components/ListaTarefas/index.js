@@ -3,6 +3,7 @@ import { A } from 'hookrouter';
 import { Table } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
+import ItensListaTarefas from '../ItensListaTarefas';
 
 
 import {
@@ -25,7 +26,7 @@ export default () => {
             setCarregarTarefas(false);
         }
         
-    }, [carregarTarefas]);
+    }, [carregarTarefas]);    
 
     return (
         <Container>
@@ -45,7 +46,10 @@ export default () => {
                         </tr>
                     </thead>
                     <tbody>
-
+                        <ItensListaTarefas 
+                            tarefas={tarefas}
+                            recarregarTarefas={setCarregarTarefas}
+                        />
                     </tbody>
                 </Table>
             </div>
