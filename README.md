@@ -10,4 +10,10 @@
 ## <b>Inicio</b> 
 
 ![Tela Principal](images/inicio.png)
+
+<hr>
+
+## <b>Inicio</b> 
+
+![Tela Principal](images/editar.png)
 <hr>
