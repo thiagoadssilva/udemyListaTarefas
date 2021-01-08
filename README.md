@@ -22,3 +22,8 @@
 
 ![Tela Principal](images/concluirTarefa.png)
 <hr>
+
+## <b>Remover Tarefa</b> 
+
+![Tela Principal](images/remover.png)
+<hr>
