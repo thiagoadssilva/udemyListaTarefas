@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import { A } from 'hookrouter';
 import ConcluirTarefa from '../ConcluirTarefa';
+import RemoverTarefa from '../RemoverTarefa';
 
 // import {
 //     Container
@@ -32,6 +33,8 @@ export default ({ tarefas, recarregarTarefas }) => {
                                 <FontAwesomeIcon icon={faEdit} />
                             </A>
                         }
+                        &nbsp;
+                        <RemoverTarefa  tarf={item} recarregarTarefas={recarregarTarefas}/>
                     </td>
                 </tr>
             )}

@@ -32,8 +32,8 @@ export default () => {
 
     return (
         <Container>
-            <div class="table-responsive">
-                <h3 className="text-center">Lista a Fazer</h3>
+            <div class="table-responsive" className="text-center">
+                <h3 >Lista a Fazer</h3>
                 <Table
                     striped
                     bordered
