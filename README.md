@@ -13,7 +13,12 @@
 
 <hr>
 
-## <b>Inicio</b> 
+## <b>Listagem de Tarefas</b> 
 
 ![Tela Principal](images/editar.png)
+<hr>
+
+## <b>Concluir Tarefa</b> 
+
+![Tela Principal](images/concluirTarefa.png)
 <hr>
