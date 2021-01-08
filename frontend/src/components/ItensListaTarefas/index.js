@@ -3,6 +3,7 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import { A } from 'hookrouter';
+import ConcluirTarefa from '../ConcluirTarefa';
 
 // import {
 //     Container
@@ -19,11 +20,13 @@ export default ({ tarefas, recarregarTarefas }) => {
     return (
         <>
             {tarefas.map((item) => 
-                <tr key={item.id} data-testid="tarefa">
+                <tr key={item.id} data-testid="taf">
                     <td width="75%" data-testid="nome-tarefa" style={{ textDecoration: marcarConcluida(item) }}>
                         {item.nome}
                     </td>
                     <td className="text-right">
+                        <ConcluirTarefa tarf={item} recarregarTarefas={recarregarTarefas} ocultarIcone={item.concluida ? 'hidden' : null}/>
+                        &nbsp;
                         {item.concluida === false &&
                             <A href={"/atualizar/" + item.id} className="btn btn-warning btn-sm">
                                 <FontAwesomeIcon icon={faEdit} />

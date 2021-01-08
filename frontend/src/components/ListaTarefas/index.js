@@ -3,7 +3,9 @@ import { A } from 'hookrouter';
 import { Table } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
+
 import ItensListaTarefas from '../ItensListaTarefas';
+
 
 
 import {
@@ -15,28 +17,34 @@ export default () => {
     const [carregarTarefas, setCarregarTarefas] = useState(true);
 
     useEffect(() => {
-        function obterTarefas(){
+        function obterTarefas() {
             const tarefasDb = localStorage['tarefas'];
             let listarTarefas = tarefasDb ? JSON.parse(tarefasDb) : [];
             setTarefas(listarTarefas);
         }
 
-        if(carregarTarefas){
+        if (carregarTarefas) {
             obterTarefas();
             setCarregarTarefas(false);
         }
-        
-    }, [carregarTarefas]);    
+
+    }, [carregarTarefas]);
 
     return (
         <Container>
-            <div className="text-center">
-                <h3>Lista a Fazer</h3>
-                <Table striped bordered hover responsive data-testid="tabela">
+            <div class="table-responsive">
+                <h3 className="text-center">Lista a Fazer</h3>
+                <Table
+                    striped
+                    bordered
+                    hover
+                    responsive
+                    data-testid="tabela"
+                >
                     <thead>
                         <tr>
                             <th>Tarefa</th>
-                            <th>
+                            <th className="text-center">
                                 <A href="/cadastrar" className="btn btn-success btn-sm" data-testid="btn-nova-tarefa">
                                     <FontAwesomeIcon icon={faPlus} />
                                     &nbsp;
@@ -46,7 +54,7 @@ export default () => {
                         </tr>
                     </thead>
                     <tbody>
-                        <ItensListaTarefas 
+                        <ItensListaTarefas
                             tarefas={tarefas}
                             recarregarTarefas={setCarregarTarefas}
                         />
