@@ -27,3 +27,8 @@
 
 ![Tela Principal](images/remover.png)
 <hr>
+
+## <b>Paginação</b> 
+
+![Tela Principal](images/paginacao.png)
+<hr>
