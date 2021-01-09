@@ -5,22 +5,30 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 
 import ItensListaTarefas from '../ItensListaTarefas';
+import Paginacao from '../Paginacao';
 
 
 
 import {
     Container
 } from './styled';
+import { func } from 'prop-types';
 
 export default () => {
+    const ITEMS_POR_PAG = 5;
+    
     const [tarefas, setTarefas] = useState([]);
     const [carregarTarefas, setCarregarTarefas] = useState(true);
+    const [totalItems, setTotalItems] = useState(0);
+    const [paginaAtual, setPaginaAtual] = useState(1);
 
     useEffect(() => {
         function obterTarefas() {
             const tarefasDb = localStorage['tarefas'];
-            let listarTarefas = tarefasDb ? JSON.parse(tarefasDb) : [];
-            setTarefas(listarTarefas);
+            let listaTarefas = tarefasDb ? JSON.parse(tarefasDb) : [];
+            setTotalItems(listaTarefas.length);
+            setTarefas(listaTarefas.splice((paginaAtual - 1) * ITEMS_POR_PAG, ITEMS_POR_PAG));
+            
         }
 
         if (carregarTarefas) {
@@ -28,7 +36,12 @@ export default () => {
             setCarregarTarefas(false);
         }
 
-    }, [carregarTarefas]);
+    }, [carregarTarefas, paginaAtual]);
+
+    function handleMudarPagina(pagina){
+        setPaginaAtual(pagina);
+        setCarregarTarefas(true);        
+    }
 
     return (
         <Container>
@@ -60,6 +73,7 @@ export default () => {
                         />
                     </tbody>
                 </Table>
+                <Paginacao totalItems={totalItems} itemsPorPagina={ITEMS_POR_PAG} paginaAtual={paginaAtual} mudarPagina={handleMudarPagina}/>
             </div>
         </Container>
     );
