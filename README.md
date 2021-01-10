@@ -5,6 +5,9 @@
 * Dentro do <b>README</b> da pasta do projeto está tudo que está sendo usando.
    * https://github.com/thiagoadssilva/udemyListaTarefas/blob/main/frontend/README.md
 
+## Observações 
+- Todo o projeto foi desenvolvido com o armazenamento no <b>localStorege</b>.
+
 <hr/>
 
 ## <b>Cadastrar Tarefa</b> 
@@ -47,3 +50,4 @@
 
 ![Tela Principal](images/atualizarTarefa.png)
 <hr>
+

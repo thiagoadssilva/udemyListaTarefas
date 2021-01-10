@@ -2,6 +2,17 @@
 * Abaixo está a lista das tecnologias que foram usadas no desenvolvimento.
 <hr>
 
+## Conteúdos 
+     - useStates
+     - useEffect
+     - localStorage
+     - Paginação
+     - Filtro
+     - Validação de Formulário
+     - Criação de Teste
+     - Ordenação de Conteúdo
+     - ...
+
 
 ## Styled-components
      yarn add styled-components --save
