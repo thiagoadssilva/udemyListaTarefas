@@ -32,3 +32,8 @@
 
 ![Tela Principal](images/paginacao.png)
 <hr>
+
+## <b>Ordenação</b> 
+
+![Tela Principal](images/ordenacao.png)
+<hr>
