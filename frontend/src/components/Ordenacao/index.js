@@ -11,38 +11,31 @@ import {
 
 export default (props) => {
     
-    console.log("ASC " + props.ordenarAsc);
-    console.log("DESC " + props.ordenarDesc);
+    // function handleAscDesc() {
+    //     return(props.ordenarAsc || props.ordenarDesc) ? 'hidden' : '';
+    // }
 
-    function handleAscDesc() {
-        return(props.ordenarAsc || props.ordenarDesc) ? 'hidden' : '';
-    }
+    // function handleAsc(){
+    //     return props.ordenarAsc ? '' : 'hidden';
+    // }
 
-    function handleAsc(){
-        return props.ordenarAsc ? '' : 'hidden';
-    }
-
-    function handleDesc(){
-        return props.ordenarDesc ? '' : 'hidden';
-    }
-
-    const styled = {
-        diplay: 'none'
-    }
+    // function handleDesc(){
+    //     return props.ordenarDesc ? '' : 'hidden';
+    // }
 
     return (
         <Container>
 
-            <FaSortContainer faSorteAsc={props.ordenarAsc} faSorteDesc={props.ordenarDesc} >
-                <FontAwesomeIcon icon={faSort} data-testid="faSort"/>
+            <FaSortContainer faSorteAsc={props.ordenarAsc} faSorteDesc={props.ordenarDesc} data-testid="faSort">
+                <FontAwesomeIcon icon={faSort}/>
             </FaSortContainer>
 
-            <FaSortUpContainer faSorteUpAsc={props.ordenarAsc}>
-                <FontAwesomeIcon icon={faSortUp} className={handleAsc()} data-testid="faSortUp"/>
+            <FaSortUpContainer faSorteUpAsc={props.ordenarAsc} data-testid="faSortUp">
+                <FontAwesomeIcon icon={faSortUp}/>
             </FaSortUpContainer>
 
-            <FaSortDownContainer faSorteDownDesc={props.ordenarDesc}>
-                <FontAwesomeIcon icon={faSortDown} className={handleDesc()} data-testid="faSortDown"/>
+            <FaSortDownContainer faSorteDownDesc={props.ordenarDesc} data-testid="faSortDown">
+                <FontAwesomeIcon icon={faSortDown}/>
             </FaSortDownContainer>
             
             
