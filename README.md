@@ -7,7 +7,7 @@
 
 <hr/>
 
-## <b>Inicio</b> 
+## <b>Cadastrar Tarefa</b> 
 
 ![Tela Principal](images/inicio.png)
 
@@ -41,4 +41,9 @@
 ## <b>Filtro</b> 
 
 ![Tela Principal](images/filtro.png)
+<hr>
+
+## <b>Atualizar Tarefa</b> 
+
+![Tela Principal](images/atualizarTarefa.png)
 <hr>
