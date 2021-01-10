@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { A } from 'hookrouter';
-import { Table } from 'react-bootstrap';
+import { Table, Form } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 
@@ -21,15 +21,18 @@ export default () => {
     const [paginaAtual, setPaginaAtual] = useState(1);
     const [ordenarAsc, setOrdenarAsc] = useState(false);
     const [ordenarDesc, setOrdenarDesc] = useState(false);
+    const [filtroTarefa, setFiltroTarefa] = useState('');
 
     useEffect(() => {
         function obterTarefas() {
             const tarefasDb = localStorage['tarefas'];
             let listaTarefas = tarefasDb ? JSON.parse(tarefasDb) : [];
+            //- Filtrar a tarefa
+            listaTarefas = listaTarefas.filter(t => t.nome.toLowerCase().indexOf(filtroTarefa.toLocaleLowerCase()) === 0);
             //- Ordenação
-            if(ordenarAsc){
-                listaTarefas.sort((t1, t2) => (t1.nome.toLowerCase() > t2.nome.toLowerCase()) ? 1 : -1);    
-            } else if(ordenarDesc){
+            if (ordenarAsc) {
+                listaTarefas.sort((t1, t2) => (t1.nome.toLowerCase() > t2.nome.toLowerCase()) ? 1 : -1);
+            } else if (ordenarDesc) {
                 listaTarefas.sort((t1, t2) => (t1.nome.toLowerCase() < t2.nome.toLowerCase()) ? 1 : -1);
             }
             //- Paginação
@@ -43,26 +46,31 @@ export default () => {
             setCarregarTarefas(false);
         }
 
-    }, [carregarTarefas, paginaAtual, ordenarDesc, ordenarAsc]);
+    }, [carregarTarefas, paginaAtual, ordenarDesc, ordenarAsc, filtroTarefa]);
 
     function handleMudarPagina(pagina) {
         setPaginaAtual(pagina);
         setCarregarTarefas(true);
     }
 
-    function handleOrdenar(event){
+    function handleOrdenar(event) {
         event.preventDefault();
 
-        if(!ordenarAsc && !ordenarDesc){
+        if (!ordenarAsc && !ordenarDesc) {
             setOrdenarAsc(true);
             setOrdenarDesc(false);
-        }else if(ordenarAsc){
+        } else if (ordenarAsc) {
             setOrdenarAsc(false);
             setOrdenarDesc(true);
-        }else{
+        } else {
             setOrdenarDesc(false);
             setOrdenarAsc(false);
         }
+        setCarregarTarefas(true);
+    }
+
+    function handleFiltrar(event){
+        setFiltroTarefa(event.target.value);
         setCarregarTarefas(true);
     }
 
@@ -83,8 +91,8 @@ export default () => {
                                 <a className="teste" href="/" onClick={handleOrdenar}>
                                     Tarefa
                                     &nbsp;
-                                    <Ordenacao ordenarAsc={ordenarAsc} ordenarDesc={ordenarDesc}/>
-                                </a>                                
+                                    <Ordenacao ordenarAsc={ordenarAsc} ordenarDesc={ordenarDesc} />
+                                </a>
                             </th>
                             <th className="text-center">
                                 <A href="/cadastrar" className="btn btn-success btn-sm" data-testid="btn-nova-tarefa">
@@ -93,6 +101,12 @@ export default () => {
                                     Nova Tarefa
                                 </A>
                             </th>
+                        </tr>
+                        <tr>
+                            <th>
+                                <Form.Control placeholder="Informa uma tarefa" className="filtroTarefa" type="text" value={filtroTarefa} onChange={handleFiltrar} data-testid="txt-tarefa" />
+                            </th>
+                            <th>&nbsp;</th>    
                         </tr>
                     </thead>
                     <tbody>

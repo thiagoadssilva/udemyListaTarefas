@@ -6,4 +6,9 @@ export const Container = styled.div`
         justify-content: center;
         align-items: center;
     }
+
+    .filtroTarefa{
+        width: 50% !important;
+        margin-left: 25%;
+    }
 `;
