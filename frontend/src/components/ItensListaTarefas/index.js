@@ -12,7 +12,7 @@ import RemoverTarefa from '../RemoverTarefa';
 
 
 
-export default ({ tarefas, recarregarTarefas }) => {
+export default (props) => {
 
     function marcarConcluida(tarefa) {
         return tarefa.concluida ? 'line-through' : 'none';
@@ -20,13 +20,13 @@ export default ({ tarefas, recarregarTarefas }) => {
 
     return (
         <>
-            {tarefas.map((item) => 
+            {props.tarefas.map((item) => 
                 <tr key={item.id} data-testid="taf">
                     <td width="75%" data-testid="nome-tarefa" style={{ textDecoration: marcarConcluida(item) }}>
                         {item.nome}
                     </td>
                     <td className="text-right">
-                        <ConcluirTarefa tarf={item} recarregarTarefas={recarregarTarefas} ocultarIcone={item.concluida ? 'hidden' : null}/>
+                        <ConcluirTarefa tarf={item} recarregarTarefas={props.recarregarTarefas} ocultarIcone={item.concluida ? 'hidden' : null}/>
                         &nbsp;
                         {item.concluida === false &&
                             <A href={"/atualizar/" + item.id} className="btn btn-warning btn-sm">
@@ -34,7 +34,7 @@ export default ({ tarefas, recarregarTarefas }) => {
                             </A>
                         }
                         &nbsp;
-                        <RemoverTarefa  tarf={item} recarregarTarefas={recarregarTarefas}/>
+                        <RemoverTarefa  tarf={item} recarregarTarefas={props.recarregarTarefas}/>
                     </td>
                 </tr>
             )}
