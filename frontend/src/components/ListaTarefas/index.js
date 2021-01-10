@@ -56,7 +56,7 @@ export default () => {
         if(!ordenarAsc && !ordenarDesc){
             setOrdenarAsc(true);
             setOrdenarDesc(false);
-        }else if(ordenarDesc){
+        }else if(ordenarAsc){
             setOrdenarAsc(false);
             setOrdenarDesc(true);
         }else{
@@ -80,7 +80,7 @@ export default () => {
                     <thead>
                         <tr>
                             <th>
-                                <a href="/" onClick={handleOrdenar}>
+                                <a className="teste" href="/" onClick={handleOrdenar}>
                                     Tarefa
                                     &nbsp;
                                     <Ordenacao ordenarAsc={ordenarAsc} ordenarDesc={ordenarDesc}/>

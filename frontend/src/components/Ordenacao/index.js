@@ -3,11 +3,17 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSort, faSortUp, faSortDown } from '@fortawesome/free-solid-svg-icons';
 
 import {
-    Container
+    Container,
+    FaSortContainer,
+    FaSortUpContainer,
+    FaSortDownContainer
 } from './styled';
 
 export default (props) => {
     
+    console.log("ASC " + props.ordenarAsc);
+    console.log("DESC " + props.ordenarDesc);
+
     function handleAscDesc() {
         return(props.ordenarAsc || props.ordenarDesc) ? 'hidden' : '';
     }
@@ -20,11 +26,26 @@ export default (props) => {
         return props.ordenarDesc ? '' : 'hidden';
     }
 
+    const styled = {
+        diplay: 'none'
+    }
+
     return (
         <Container>
-            <FontAwesomeIcon icon={faSort} className={handleAscDesc()} data-testid="faSort"/>
-            <FontAwesomeIcon icon={faSortUp} className={handleAsc()} data-testid="faSortUp"/>
-            <FontAwesomeIcon icon={faSortDown} className={handleDesc()} data-testid="faSortDown"/>
+
+            <FaSortContainer faSorteAsc={props.ordenarAsc} faSorteDesc={props.ordenarDesc} >
+                <FontAwesomeIcon icon={faSort} data-testid="faSort"/>
+            </FaSortContainer>
+
+            <FaSortUpContainer faSorteUpAsc={props.ordenarAsc}>
+                <FontAwesomeIcon icon={faSortUp} className={handleAsc()} data-testid="faSortUp"/>
+            </FaSortUpContainer>
+
+            <FaSortDownContainer faSorteDownDesc={props.ordenarDesc}>
+                <FontAwesomeIcon icon={faSortDown} className={handleDesc()} data-testid="faSortDown"/>
+            </FaSortDownContainer>
+            
+            
         </Container>
     );
 }

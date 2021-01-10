@@ -25,15 +25,13 @@ export default (props) => {
                     <td width="75%" data-testid="nome-tarefa" style={{ textDecoration: marcarConcluida(item) }}>
                         {item.nome}
                     </td>
-                    <td className="text-right">
+                    <td style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
                         <ConcluirTarefa tarf={item} recarregarTarefas={props.recarregarTarefas} ocultarIcone={item.concluida ? 'hidden' : null}/>
-                        &nbsp;
                         {item.concluida === false &&
                             <A href={"/atualizar/" + item.id} className="btn btn-warning btn-sm">
                                 <FontAwesomeIcon icon={faEdit} />
                             </A>
                         }
-                        &nbsp;
                         <RemoverTarefa  tarf={item} recarregarTarefas={props.recarregarTarefas}/>
                     </td>
                 </tr>
