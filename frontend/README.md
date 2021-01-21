@@ -58,3 +58,10 @@
 * Referências: https://www.npmjs.com/package/prop-types
 
 <hr>
+
+## Axios
+    yarn add axios --save
+
+* Referências: https://www.npmjs.com/package/axios
+
+<hr>
