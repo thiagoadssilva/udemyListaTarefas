@@ -10,6 +10,10 @@ import {
 
 export default ({ tarf, recarregarTarefas }) => {
     const [exibirModal, setExibirModal] = useState(false);
+    const [exibirModalErro, setExibirModalErro] = useState(false);
+
+    const API_URL_TAREFA = "http://localhost:3001/gerenciador-tarefas/";
+
     let texto = "Deseja Realmente excluir a tarefa?";
 
     function handleAbrirModal(event) {
@@ -21,17 +25,27 @@ export default ({ tarf, recarregarTarefas }) => {
         setExibirModal(false);
     }
 
-    async function handleRemoverTarefa(event){
+    function handleFecharModalErro(){
+        setExibirModalErro(false);
+    }
+
+    async function handleRemoverTarefa(event) {
         event.preventDefault();
 
+        try {
+            let {tarefa} = await axios.delete(API_URL_TAREFA + tarf.id);
+            setExibirModal(false);
+            recarregarTarefas(true);
+        } catch (error) {
+            setExibirModalErro(true);
+        }
         //-INICIO Código usado para trabalhar com localstorage
         // const tarefasDb = localStorage['tarefas'];
         // let tarefas = tarefasDb ? JSON.parse(tarefasDb) : [];
         // tarefas = tarefas.filter(tarefa => tarefa.id !== tarf.id);
         // localStorage['tarefas'] = JSON.stringify(tarefas);
         //-FIM Código usado para trabalhar com localstorage
-        setExibirModal(false);
-        recarregarTarefas(true);
+        
     }
 
     return (
@@ -65,6 +79,20 @@ export default ({ tarf, recarregarTarefas }) => {
                     </Button>
                 </Modal.Footer>
 
+            </Modal>
+
+            <Modal show={exibirModalErro} onHide={handleFecharModalErro}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Erro</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    Erro ao remover a tarefa, por favo tente novamente.
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="warning" onClick={handleFecharModalErro}>
+                        Fechar
+                    </Button>
+                </Modal.Footer>
             </Modal>
         </Container>
     );
