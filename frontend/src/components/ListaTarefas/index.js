@@ -42,7 +42,7 @@ export default () => {
             //- FIM Criando a ordenação
 
             try {
-                const params = `?pag=${paginaAtual}&ordem=${ordem}&filtro-tarefa=${filtroTarefa}`;
+                const params = `?pag=${paginaAtual}&ordem=${ordem}&filtro-tarefa=${filtroTarefa}&itens-por-pagina=${ITEMS_POR_PAG}`;
                 let { data } = await axios.get(API_URL_LISTAR_TAREFAS + params);
                 setTotalItems(data.totalItens);
                 setTarefas(data.tarefas);

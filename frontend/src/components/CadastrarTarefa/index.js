@@ -2,26 +2,39 @@ import React, { useState } from 'react';
 import { Button, Form, Jumbotron, Modal } from 'react-bootstrap';
 import { navigate, A } from 'hookrouter';
 import Tarefa from '../../models/tarefa.model';
+import axios from 'axios';
 
 import {
     Container
 } from './styled';
 
 export default () => {
+    const API_URL_CADASTRAR_TAREFA = "http://localhost:3001/gerenciador-tarefas";
+
     const [tarefa, setTarefa] = useState('');
     const [formValidado, setFormValidado] = useState(false);
     const [exibirModal, setExibirModal] = useState(false);
+    const [exibirModalErro, setExibirModalErro] = useState(false);
 
-    function cadastrar(event) {
+    async function cadastrar(event) {
         event.preventDefault();
         setFormValidado(true);
-        if(event.currentTarget.checkValidity() === true){
-            const tarefasDb = localStorage['tarefas'];
-            const tarefas = tarefasDb ? JSON.parse(tarefasDb) : [];
+        if (event.currentTarget.checkValidity() === true) {
+            try {
+                const novaTarefa = new Tarefa(null, tarefa, false);
+                await axios.post(API_URL_CADASTRAR_TAREFA, novaTarefa);
+                setExibirModal(true);
+            } catch (error) {
+                setExibirModalErro(true);
+            }
+            //- INICIO Parte referente ao uso do localStorage
+            // const tarefasDb = localStorage['tarefas'];
+            // const tarefas = tarefasDb ? JSON.parse(tarefasDb) : [];
 
-            tarefas.push(new Tarefa(new Date().getTime(), tarefa, false));
-            localStorage['tarefas'] = JSON.stringify(tarefas);
-            setExibirModal(true);
+            // tarefas.push(new Tarefa(new Date().getTime(), tarefa, false));
+            // localStorage['tarefas'] = JSON.stringify(tarefas);
+            // setExibirModal(true);
+            //- FIM Parte referente ao uso do localStorage
         }
     }
 
@@ -29,8 +42,12 @@ export default () => {
         setTarefa(event.target.value);
     }
 
-    function handleFecharModal(){
+    function handleFecharModal() {
         navigate('/');
+    }
+
+    function handleFecharModalErro(){
+        setExibirModalErro(false);
     }
 
     return (
@@ -79,6 +96,20 @@ export default () => {
                     <Modal.Footer>
                         <Button variant="success" onClick={handleFecharModal}>
                             Continuar
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
+
+                <Modal show={exibirModalErro} onHide={handleFecharModalErro}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Erro</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        Erro ao adicionar a tarefa, por favor tente novamente!
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="warning" onClick={handleFecharModalErro}>
+                            Fechar
                         </Button>
                     </Modal.Footer>
                 </Modal>
