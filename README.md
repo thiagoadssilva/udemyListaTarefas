@@ -6,7 +6,9 @@
    * https://github.com/thiagoadssilva/udemyListaTarefas/blob/main/frontend/README.md
 
 ## Observações 
-- Todo o projeto foi desenvolvido com o armazenamento no <b>localStorege</b>.
+- Todo parte das informações das tarefa está sendo feita através de uma api, porém essa api, não está usando banco de dados, apenas a memoria.
+   - Projeto da API está no link: 
+         https://github.com/thiagoadssilva/udemyListaTarefasApi
 
 <hr/>
 
