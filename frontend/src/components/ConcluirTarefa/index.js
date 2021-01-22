@@ -1,41 +1,58 @@
-import React, {useState} from 'react';
-import {Modal, Button} from 'react-bootstrap';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faClipboardCheck} from '@fortawesome/free-solid-svg-icons';
+import React, { useState } from 'react';
+import { Modal, Button } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faClipboardCheck } from '@fortawesome/free-solid-svg-icons';
+import axios from 'axios';
 
 import {
     Container
 } from './styled';
 
-export default ({tarf, recarregarTarefas, ocultarIcone}) => {
+export default ({ tarf, recarregarTarefas, ocultarIcone }) => {
     const [exibirMOdal, setExibirModal] = useState(false);
+    const [exibirModalErro, setExibirModalErro] = useState(false);
 
-    function handleAbrirModal(event){
+    const API_URL_CONCLUIR_TAREFA = 'http://localhost:3001/gerenciador-tarefas/';
+
+    function handleAbrirModal(event) {
         event.preventDefault();
         setExibirModal(true);
     }
 
-    function handleFecharModal(){
+    function handleFecharModal() {
         setExibirModal(false);
     }
 
-    function handleConcluirTarefa(event){
-        event.preventDefault();
-        const tarefaDb = localStorage['tarefas'];
-        let tarefas = tarefaDb ? JSON.parse(tarefaDb) : [];
-        tarefas = tarefas.map(tarefa => {
-            if(tarefa.id === tarf.id){
-                tarefa.concluida = true;
-            }
-            return tarefa;
-        });
-        localStorage['tarefas'] = JSON.stringify(tarefas);
-        setExibirModal(false);
-        recarregarTarefas(true);
+    function handleFecharModalErro() {
+        setExibirModalErro(false);
     }
-    return(
+
+    async function handleConcluirTarefa(event) {
+        event.preventDefault();
+        try {
+            let { tarefa } = await axios.put(API_URL_CONCLUIR_TAREFA + tarf.id + '/concluir');
+            setExibirModal(false);
+            recarregarTarefas(true);
+        } catch (error) {
+            setExibirModal(false);
+            setExibirModalErro(true);
+        }
+        //- INICIO Cósigo para trabalhar com localStorage
+        // const tarefaDb = localStorage['tarefas'];
+        // let tarefas = tarefaDb ? JSON.parse(tarefaDb) : [];
+        // tarefas = tarefas.map(tarefa => {
+        //     if(tarefa.id === tarf.id){
+        //         tarefa.concluida = true;
+        //     }
+        //     return tarefa;
+        // });
+        // localStorage['tarefas'] = JSON.stringify(tarefas);
+        //- FIM Cósigo para trabalhar com localStorage
+
+    }
+    return (
         <Container className={tarf.concluida} >
-            <Button className="btn-sm" onClick={handleAbrirModal} data-testid="btn-abrir-modal"> 
+            <Button className="btn-sm" onClick={handleAbrirModal} data-testid="btn-abrir-modal">
                 <FontAwesomeIcon icon={faClipboardCheck} />
             </Button>
 
@@ -56,6 +73,19 @@ export default ({tarf, recarregarTarefas, ocultarIcone}) => {
                     </Button>
                     <Button variant="light" onClick={handleFecharModal} data-testid="btn-fechar-modal">
                         NÃO
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+            <Modal show={exibirModalErro} onHide={handleFecharModalErro}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Erro</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    Erro ao concluir a tarefa, por favor tente novamente mais tarde.
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="warning" onClick={handleFecharModalErro}>
+                        Fechar
                     </Button>
                 </Modal.Footer>
             </Modal>
