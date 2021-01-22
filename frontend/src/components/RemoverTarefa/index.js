@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import axios from 'axios';
 
 import {
     Container
@@ -20,12 +21,15 @@ export default ({ tarf, recarregarTarefas }) => {
         setExibirModal(false);
     }
 
-    function handleRemoverTarefa(event){
+    async function handleRemoverTarefa(event){
         event.preventDefault();
-        const tarefasDb = localStorage['tarefas'];
-        let tarefas = tarefasDb ? JSON.parse(tarefasDb) : [];
-        tarefas = tarefas.filter(tarefa => tarefa.id !== tarf.id);
-        localStorage['tarefas'] = JSON.stringify(tarefas);
+
+        //-INICIO Código usado para trabalhar com localstorage
+        // const tarefasDb = localStorage['tarefas'];
+        // let tarefas = tarefasDb ? JSON.parse(tarefasDb) : [];
+        // tarefas = tarefas.filter(tarefa => tarefa.id !== tarf.id);
+        // localStorage['tarefas'] = JSON.stringify(tarefas);
+        //-FIM Código usado para trabalhar com localstorage
         setExibirModal(false);
         recarregarTarefas(true);
     }

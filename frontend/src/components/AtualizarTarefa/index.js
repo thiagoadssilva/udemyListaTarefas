@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Jumbotron, Modal, Button } from 'react-bootstrap';
 import { navigate, A } from 'hookrouter';
+import axios from 'axios';
+import Tarefa from '../../models/tarefa.model';
 
 import {
     Container
@@ -8,17 +10,32 @@ import {
 
 export default (props) => {
 
+    const API_URL_TAREFAS = "http://localhost:3001/gerenciador-tarefas/";
+
     const [exibirModal, setExibirModal] = useState(false);
     const [formValidado, setFormValidado] = useState(false);
     const [tarefa, setTarefa] = useState('');
     const [carregarTarefa, setCarregarTarefa] = useState(true);
+    const [exibirModalErro, setExibirModalErro] = useState(false);
 
-    useEffect(() =>{
-        if(carregarTarefa){
-            const tarefaDb = localStorage['tarefas'];
-            const tarefas = tarefaDb ? JSON.parse(tarefaDb) : [];
-            const tarefa = tarefas.filter(t => t.id === parseInt(props.id))[0];
-            setTarefa(tarefa.nome);
+    useEffect(() => {
+
+        async function obterTarefa() {
+            try {
+                let { data } = await axios.get(API_URL_TAREFAS + props.id);
+                setTarefa(data.nome);
+            } catch (error) {
+                navigate('/');
+            }
+        }
+
+        if (carregarTarefa) {
+            //-INICIO Código para ter acesso ao localStorage
+            // const tarefaDb = localStorage['tarefas'];
+            // const tarefas = tarefaDb ? JSON.parse(tarefaDb) : [];
+            // const tarefa = tarefas.filter(t => t.id === parseInt(props.id))[0];
+            //-FIM Código para ter acesso ao localStorage
+            obterTarefa();
             setCarregarTarefa(true);
         }
     }, [carregarTarefa, props]);
@@ -28,33 +45,45 @@ export default (props) => {
         navigate('/');
     }
 
-    function handleFecharModal(){
+    function handleFecharModal() {
         navigate('/');
     }
 
-    function atualizar(event){
+    function handleFecharModalErro() {
+        setExibirModalErro(false);
+    }
+
+    async function atualizar(event) {
         event.preventDefault();
         setFormValidado(true);
 
-        if(event.currentTarget.checkValidity() === true){
-            const tarefaDb = localStorage['tarefas'];
-            let tarefas = tarefaDb ? JSON.parse(tarefaDb) : [];
+        if (event.currentTarget.checkValidity() === true) {
+            try {
+                const tarefaAtualizar = new Tarefa(null, tarefa, false);
+                await axios.put(API_URL_TAREFAS + props.id, tarefaAtualizar);
+                setExibirModal(true);
+            } catch (error) {
+                setExibirModalErro(true);
+            }
+            //- INICIO código referente ao processo do localStorage
+            // const tarefaDb = localStorage['tarefas'];
+            // let tarefas = tarefaDb ? JSON.parse(tarefaDb) : [];
 
-            console.log(tarefas);
+            // console.log(tarefas);
 
-            tarefas = tarefas.map(tarefaObj =>{
-                if(tarefaObj.id === parseInt(props.id)){
-                    tarefaObj.nome = tarefa;
-                }
-                return tarefaObj;
-            });
-            localStorage['tarefas'] = JSON.stringify(tarefas);
-            setExibirModal(true);
+            // tarefas = tarefas.map(tarefaObj => {
+            //     if (tarefaObj.id === parseInt(props.id)) {
+            //         tarefaObj.nome = tarefa;
+            //     }
+            //     return tarefaObj;
+            // });
+            // localStorage['tarefas'] = JSON.stringify(tarefas);
+            //- FIM código referente ao processo do localStorage            
         }
         setExibirModal(true);
     }
 
-    function handleTxtTarefa(event){
+    function handleTxtTarefa(event) {
         setTarefa(event.target.value);
     }
 
@@ -93,6 +122,20 @@ export default (props) => {
                     <Modal.Footer>
                         <Button variant="success" onClick={handleFecharModal}>
                             Continuar
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
+
+                <Modal show={exibirModalErro} onHide={handleFecharModalErro}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Erro</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        Erro ao excluir a tarefa, por favor tente mais tarde!
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="warning" onClick={handleFecharModalErro}>
+                            Fechar
                         </Button>
                     </Modal.Footer>
                 </Modal>
