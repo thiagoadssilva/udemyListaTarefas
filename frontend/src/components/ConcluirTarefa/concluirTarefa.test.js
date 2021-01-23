@@ -6,7 +6,7 @@ import {render, fireEvent} from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 
 
-describe('Teste do componente Concluir Tarefa', () =>{
+describe.skip('Teste do componente Concluir Tarefa', () =>{
     const nomeTarefa = 'Bento jose da silva';
     const tarefa = new Tarefa(1, nomeTarefa, false);
 
