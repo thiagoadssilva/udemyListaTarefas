@@ -18,7 +18,7 @@ import {
 export default () => {
 
     const ITEMS_POR_PAG = 5;
-    const API_URL_LISTAR_TAREFAS = "http://localhost:3001/gerenciador-tarefas";
+    const API_URL_LISTAR_TAREFAS = "http://localhost:3002/gerenciador-tarefas";
 
     const [tarefas, setTarefas] = useState([]);
     const [carregarTarefas, setCarregarTarefas] = useState(true);

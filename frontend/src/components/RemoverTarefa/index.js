@@ -12,7 +12,7 @@ export default ({ tarf, recarregarTarefas }) => {
     const [exibirModal, setExibirModal] = useState(false);
     const [exibirModalErro, setExibirModalErro] = useState(false);
 
-    const API_URL_TAREFA = "http://localhost:3001/gerenciador-tarefas/";
+    const API_URL_TAREFA = "http://localhost:3002/gerenciador-tarefas/";
 
     let texto = "Deseja Realmente excluir a tarefa?";
 
