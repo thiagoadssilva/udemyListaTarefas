@@ -9,7 +9,7 @@ import {
 } from './styled';
 
 export default () => {
-    const API_URL_CADASTRAR_TAREFA = "http://localhost:3001/gerenciador-tarefas";
+    const API_URL_CADASTRAR_TAREFA = "http://localhost:3002/gerenciador-tarefas";
 
     const [tarefa, setTarefa] = useState('');
     const [formValidado, setFormValidado] = useState(false);

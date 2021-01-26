@@ -10,7 +10,7 @@ import {
 
 export default (props) => {
 
-    const API_URL_TAREFAS = "http://localhost:3001/gerenciador-tarefas/";
+    const API_URL_TAREFAS = "http://localhost:3002/gerenciador-tarefas/";
 
     const [exibirModal, setExibirModal] = useState(false);
     const [formValidado, setFormValidado] = useState(false);
